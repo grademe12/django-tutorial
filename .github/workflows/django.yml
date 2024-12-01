@@ -8,7 +8,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      EC2_CONNECTION_STRING: ubuntu@ec2-34-250-251-235.eu-west-1.compute.amazonaws.com
+      EC2_CONNECTION_STRING: ubuntu@ec2-3-36-132-175.ap-northeast-2.compute.amazonaws.com
 
     steps:
     - uses: actions/checkout@v4
@@ -27,7 +27,7 @@ jobs:
             git pull origin main
           else # (없으면)
             # git repository로부터 파일을 클론한다
-            git clone https://github.com/gotoweb/django-tutorial/
+            git clone https://github.com/grademe12/django-tutorial.git
             cd django-tutorial
           fi
         '
