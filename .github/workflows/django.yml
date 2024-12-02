@@ -13,7 +13,7 @@ jobs:
   deploy: # job_id
     runs-on: ubuntu-latest
     env:
-      EC2_CONNECTION_STRING: ubuntu@ec2-34-250-251-235.eu-west-1.compute.amazonaws.com
+      EC2_CONNECTION_STRING: ubuntu@ec2-13-209-22-99.ap-northeast-2.compute.amazonaws.com
 
     steps:
     - name: deploy Step 1
