@@ -5,13 +5,21 @@ on:
     branches: [ "main" ]
 
 jobs:
-  deploy:
+  pre-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: pre step 1
+      run: echo "pre step 1 happens"
+  deploy: # job_id
     runs-on: ubuntu-latest
     env:
-      EC2_CONNECTION_STRING: ubuntu@ec2-3-36-132-175.ap-northeast-2.compute.amazonaws.com
+      EC2_CONNECTION_STRING: ubuntu@ec2-34-250-251-235.eu-west-1.compute.amazonaws.com
 
     steps:
-    - uses: actions/checkout@v4
+    - name: deploy Step 1
+      run: echo "step 1 happens"
+    - name: deploy Step 2
+      run: echo "step 2 happens"
     - name: Run Tests
       run: |
         echo "hello world"
@@ -27,7 +35,25 @@ jobs:
             git pull origin main
           else # (없으면)
             # git repository로부터 파일을 클론한다
-            git clone https://github.com/grademe12/django-tutorial.git
+            git clone https://github.com/gotoweb/django-tutorial/
             cd django-tutorial
           fi
+
+          # 가상 환경 설정
+          rm -rf .venv # 기존에 설치된 것 있으면 지우고
+          python3 -m venv .venv
+          source .venv/bin/activate
+          
+          # 종속성 설치
+          pip3 install -r requirements.txt
+
+          # 종속성이 뭐가 설치되었을까?
+          pip3 freeze
+
+          # 서버가 실행중이면 끄고
+          # kill -15 <runserver의 PID>
+          ps -ef | grep runserver | awk \'{ print $2 }\' | head -1 | xargs kill -15
+
+          # 서버 새로 실행 (백그라운드로)
+          nohup python3 manage.py runserver &
         '
